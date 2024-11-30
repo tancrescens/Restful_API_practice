@@ -8,17 +8,18 @@ app.use(cors());
 // Parameter routes===============
 // Route: default
 app.get("/", function (req, res) {
-    res.send("Hello world!")
+    res.send("Hello world!");
 });
 
 // Route: hello name
 app.get("/hello/:name", (req, res) => {
-    let name = req.params.name
-    res.send(`Hello ${name}`)
+    let name = req.params.name;
+    res.send(`Hello ${name}`);
 });
 
 // String Query routes===============
-app.get("/echo", (res, req) => {
+// Route: echo
+app.get("/echo", (req, res) => {
     // Get all query parameters
     const queryParams = req.query;
 
@@ -30,8 +31,27 @@ app.get("/echo", (res, req) => {
     };
 
     // Send the response as JSON
+    console.log(req.query);
     res.json(response);
-})
+});
+
+// Route: difference
+app.get("/difference/:n1/:n2", function (req, res) {
+    let n1 = parseFloat(req.params.n1);
+    let n2 = parseFloat(req.params.n2);
+
+    res.send(Math.abs(n1 - n2).toString());
+});
+
+// Route: scream
+app.get("/scream", function (req, res) {
+    const queryParams = req.query;
+    let message = queryParams.message;
+    let receipient = queryParams.receipient;
+
+    res.send(message.toUpperCase() + " " + receipient.toUpperCase());
+});
+
 
 
 app.listen("3000", function () {
